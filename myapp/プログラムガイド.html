@@ -1,0 +1,132 @@
+1.1.1 プログラムの基本骨格
+①初期画面は、その後のページの構成を代表するもので、決定的な意味を
+持っている。その基本骨格を成す要素は、title_area、select_area、
+input_area、output_area、announce_area ,footer_area
+ とGoボタンだが、その中で、処理上重要な要素は
+select_area、input_area　と Goボタンである。
+＋input_area の基本仕様はfna:1: fnu:1: com  とし、com{:3::2:]、
+とし、comの後ろが空白の場合は、即、コマンドがないと判断し、直下の➂に
+記載の、処理を実行する。ここで、:1: の前の文字は、display_dataテーブル
+のカラム名に対応しており、fnaはfamily_nameの略、fnuはfamily_number
+の略、comはcommand（処理用のコマンド）の略である。
+②ユーザが８つあるselect_areaのオプション
+｛（Home、Login、R_materialism、Blog、Opinion plaza、Notification、
+Sell、Contact、ForAdmin）又は、（ホーム、ログイン、繋がりの唯物観、
+ブログ、意見の広場、お知らせ、販売、コンタクト、管理者用｝中から一つを
+選択し、Goボタンを押した場合、プログラムはinput_areaの情報を分析し、
+それが何らかの処理を求める形のものであり、しかも、見合った処理が可能
+だと見做した場合、その処理を実行する。この処理の詳細については、
+オプション毎の処理のセクションで、個別に記述する。
+＋selectタグの値（文字列）と fnuの値（数字）から、
+適切な処理のフォームを決定し、com::
+以下の値を評価する。もし、それが、処理を実行する上で十分なら、実行し
+、不十分な場合には、output_areaの先頭に、エラーメッセージを出す。
+➂選択されたオプションfamilyに所属する処理に関する資料(入力フォーム）
+を全てoutput_areaに表示するようにする。その為に必要なデータは、全て
+display_data テーブルに置き、そのフィールドのfamily_nameカラムの値は
+、select_areaで選択された名前に所属するもの見做し、そのfamily_number
+の値は、四桁で、その一桁目はテーブル名、二桁目はコマンド名、三桁目は
+sql_statementの分類番号、四桁目はsql_statementに関する付加的な情報を表すことにし、それらは000で区切るようにする。
+④このように、資料は入力フォームのリストが選択肢の形で書き出されるので、
+ユーザはその中の一つを選んでinput_areaにコピペし、必要な修正を加えた後、
+Goボタンを押すだけで、希望する処理が実行される筈。
+
+以下のデータ
+新規ユーザ登録のフォーム：
+:fnu:2004  
+:com:
+:1:i_name :2: <br>
+:1:pas :2:  <br>
+:1:email:2: <br>
+:1:f_name :2: <br>
+:oth: <br>
+をdisplay_dataテーブルに収容する際のinput_areaの入力データ
+は、
+
+<h3>プログラムのテスト及び公開に向けての準備の為に登録したデータ
+のリスト</h3>
+<u>Home 又は ホーム</u><br>
+<u>Login 又は ログイン</u><br>
+<h4>New user registration form</h4>
+:fnu:  ##  <br>
+:com:
+:1:i_name :2:  ## <br>
+:1:pas :2:  ##  <br>
+:1:email:2:  ##  <br>
+:1:f_name :2: # <br>
+:oth: <br>
+*When registering a new entry, please copy above text (from :fnu to oth:)
+ and paste it into the textbox above and write all indespensable data 
+(f_name is only the exception) in the blank space after
+:2: on each of the above lines.
+<h4>新規ユーザ登録</h4>
+:fnu: ##  <br>
+:com:
+:1:i_name :2: #必須。ID名で任意、但し半角のローマ字又は数字で、4字から20字までの間# <br>
+:1:pas :2:  #必須。半角の　ローマ字、数字、ハイフンの取り合わせで、10から20字まで#  <br>
+:1:email:2: # 必須。真正のメールアドレス #<br>
+:1:f_name :2:#必須項目ではありませんが、投稿する場合には必要になる他、
+<br>パスワードの代わりにもなります。もし入力する場合は、半角のローマ字又は数字で、
+<br>2字から20字までの間でお願いします。#  <br>
+:oth: <br>
+登録方法:セレクトボックスで、ログインが選択されている事を確認したうえで、
+<br>上の文字列の、:fnuからoth:までをコピーし、
+<br>上のテキストボックスにペーストして下さい。そして、各行の
+<br>#から# 迄を消し、そこに必要事項を書き込んでから、Goボタンを押して
+<br>下さい。
+<br>!ご注意1：ユーザ登録は、同時にこのサイトの規約を受け入れる事を意味します。
+<br>ごく簡単なものなので、目通しをお願いします。
+<br>!ご注意2：i_name及びf_nameについては、何れもユニーク（唯一）である必要が
+<br>あるので、もし先口がある場合には、拒否される事になります。
+
+<u>R_materialism　又は　繋がりの唯物観</u><br>
+<u>Blog　又は　ブログ</u><br>
+<u>Opinion Plaza 又は　意見の広場</u><br>
+<u>Notification　又は　お知らせ</u><br>
+<u>Sell　又は　販売</u>&<br>
+<u>Contact　又は　コンタクト</u><br>
+<u>ForAdmin 又は　管理者用</u><br>
+<h4> コマンドのテンプレート（デフォルトとして、表示される）</h4>
+(#から#までを消して、必要事項を記入する)
+:fnu:##table_list番号+00+command_list番号##    <br>
+:com:<br>
+:1:Option_number :2:##処理を振り分けるための、selectボックスのオプション番号##  <br>
+:1:key2:#sql文を作る際に必要なデータ（value)で、この組み合わせ個数は任意#  <br>
+:1:where :2:#sql文を作る際に必要な条件文#  <br>
+...
+:oth: <br>#&nbsp;&nbsp;# 
+<br>---------------------<br>
+参考資料：<br>
+table_list = ['','option_info','user_data','display_data']<br>
+# command_listは、fnuの２桁目の値に対応する<br>
+command_list = ['','fetch_all','fetch_one',<br>
+    'update_a_record','insert_a_record','insert_records','delete_records']<br>
+#fnuの一桁目の値（テーブルを1,2,3で区別）に対応する<br>
+#フィールドのカラム名を要素とするリストを要素とする。<br>
+#これを使えば、対応するvaluesの値も自動的に決める事が出来る。<br>
+column_data_list = ['',<br>
+['command_string','family_name','family_number'],<br>
+['i_name','pas','email','f_name','login_history',<br>
+    'rw_history','permission'],<br>
+['writer_name','sentence','photo_address','family_name',<br>
+ 'diplay_destination','rw_permission ',' family_number'<br>
+]]<br>
+# column_data_listの中のカラム数が収容されるが、不要かも<br>
+#　知れない。<br>
+values_code_list = ['',"(%s, %s , %s)",<br>
+    "(%s, %s , %s, %s, %s , %s ,%s)",<br>
+    "(%s, %s , %s, %s, %s , %s ,%s)"]<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

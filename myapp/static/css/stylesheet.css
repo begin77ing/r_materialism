@@ -1,26 +1,113 @@
-/* ── ページ ── */
-html, body {
-width: 100%;
-height: 100%;
-padding: 0px;
-margin: 0px;
-}
 /* ── フレーム分割 ── */
-body > iframe { position: fixed; box-sizing: border-box }
+/* 画面全体の背景を黄色にする */
+body {
+    background-color: lightyellow; /* !importantで強制的に適用します */
+}
+body > iframe {    
+     position: fixed; box-sizing: border-box; border: none;color:yellowgreen; }
+
 iframe:nth-of-type( 1 ){
-left: 0px; top: 0px;
-width: 55%;
-height: 250px;
+    left: 0px; 
+    top: 0px;
+    /* 55%から少しだけ引く */
+    width: calc(54% - 1px); 
+    height: 250px;
 }
+
 iframe:nth-of-type( 2 ){
-left: 55%; top: 0px;
-width: 45%;
-height: 250px;
+    /* 開始位置を55%に固定 */
+    left: 55%; 
+    top: 0px;
+    /* 45%から少しだけ引く */
+    width: calc(44% - 1px); 
+    height: 250px;
 }
+
 iframe:nth-of-type( 3 ){
-left: 0px; top: 250px;
-width: 100% ;
-height: calc( 100% - 250px );
+    left: 0px; 
+    top: 250px;
+    width: 100%;
+    height: calc(100% - 250px);
 }
-#your_textarea{text-align: right; }
-#select{overflow:auto width=none;}
+/* textareaが枠からはみ出さないようにする */
+textarea {
+    width: 40%;      /* 2つ並べるので、余裕を持って40%ずつにする */
+    min-width: 100px; /* 小さくなりすぎない限界 */
+    box-sizing: border-box; /* 枠線を含めて計算 */
+    vertical-align: top;    /* セレクトタグと頭を揃える */
+}
+
+select {
+    width: 15%;      /* セレクトタグも%で指定 */
+    vertical-align: top;
+}
+/* 1. テキストエリア、セレクトタグ、フッターを一括で18pxに設定 */
+#input_area, 
+#output_area, 
+#select_area, 
+#footer {
+    font-size: 18px; /* 18pxで固定 */
+    box-sizing: border-box;
+    vertical-align: top; /* 上端を揃える */
+}
+
+/* タイトル部分（h1タグや特定のIDを指定） */
+h1, .title-area, #header_title { 
+    font-size: 20px !important; /* 強制的に40pxにする */
+    font-weight: bold;
+    display: flex; 
+    /*display: block; /* 念のためブロック要素として扱う */
+    color:#2e8b57;
+    background-color: #00ff00; /* この行だけの背景色（例：薄いグレー） */
+    padding: 10px;           /* 内側の余白 */
+    border-radius: 5px;      /* 角を少し丸くする場合 */
+    
+}
+
+/* 3. セレクトタグのオプション設定（念のため1行に収まりやすくする） */
+#select_area option {
+font-size: 16px;
+padding: 2px 5px;
+}
+/* サブミットボタンの設定 */
+#go-button {
+    font-size: 18px !important;
+    padding: 10px 20px !important;
+    
+    /* ボタンの背景色（例：青色系） */
+    background-color: #007bff !important; 
+    
+    /* ボタンの文字色（白） */
+    color: white !important;
+    
+    /* ボタンの角を少し丸くする（お好みで） */
+    border-radius: 5px;
+    
+    /* 枠線を消す、または目立たなくする */
+    border: none;
+    
+    /* マウスを乗せた時に少し明るくする演出（任意） */
+    cursor: pointer;
+}
+
+/* マウスを乗せた時の変化（ホバー効果） */
+#go-button:hover {
+    background-color: #2e8b57 !important;
+}
+
+/* 行全体のレイアウトと色の設定 */
+.button-row {
+    display: flex;          /* 横並びにする */
+    align-items: center;    /* 上下の中央を揃える */
+    gap: 10px;              /* ボタンと文字の間隔（お好みで） */
+    
+    background-color: #00f0ff; /* この行だけの背景色（例：薄いグレー） */
+    padding: 10px;           /* 内側の余白 */
+    border-radius: 5px;      /* 角を少し丸くする場合 */
+}
+
+/* 文字列側のスタイル（必要に応じて） */
+.announce {
+    color: #333;            /* 文字の色 */
+    font-size: 0.9em;       /* 文字の大きさ */
+}

@@ -1,35 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>relational materialism</title>
-<script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.js"></script>
-
-<link rel="stylesheet" href="css/stylesheet.css">
-<link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-<script defer src="https://pyscript.net/latest/pyscript.js"></script>
-
+<!-- ここに title はもう書かない（またはタブ用として1つだけ書く） -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet.css') }}">
 </head>
 <body>
-<h4>{{title_area_data}}</h4>         
-<div  text-align: right;>
-<form action="submit_data" method="post">
-<select name="select_area" id ="select_area" size = "9">select your option.
-{% for op_name in select_area_data %}
-        <option value="{{ op_name }}">{{ op_name }}</option>
-{% endfor %}
 
+<form action="submit_data" method="post">
+<!-- 画面に表示されるタイトル 
+ <div name = "title_area_data"><h4>{{title_area_data}}</h4></div>  
+-->
+<h1 class="main-title">{{title_area_data}}</h1>
+      
+<div  text-align: right;>
+<select name="select_area" id="select_area" size="9">
+  {% for item in ol %}
+    {# itemの内容が、viewsから渡したcurrent_selectと一致すればselectedを付与 #}
+    <option value="{{ item }}" {% if item == current_select %}selected{% endif %}>
+      {{ item }}
+  {% endfor %}
 </select>
-<textarea id="input_area" name="input_area" rows="10" cols="45" style="overflow-y:scroll">
+<textarea id="input_area" name="input_area" rows="10" style="overflow-y:scroll">
 {{input_area_data}}
 </textarea>
-<textarea id="output_area" name="output_area" rows="10" cols="45" style="overflow-y:scroll">
+<textarea id="output_area" name="output_area" rows="10" style="overflow-y:scroll">
 {{output_area_data}}
 </textarea>
 <!--<button onclick = "call_python">execute</button>
 -->
 <p></p>
-<input type="hidden" name="my_data" id="hidden_data" value="">
-        <button type="submit">Go</button>
+<!--
+<input type="hidden" name="button" id="button" value="">
+        <button type="submit" id="go-button">Go</button>
+-->
+<!-- 行全体を囲むコンテナを追加 -->
+<div class="button-row">
+    <input type="hidden" name="button" id="button" value="">
+    <button type="submit" id="go-button">Go</button>
+    
+      <span class="announce" id ='announce'>{{announce_area_data}}</span>
+</div>
+
+
 <div id ="footer">{{footer_area_data}}
 </div>
 </form>

@@ -1,5 +1,5 @@
 import sys
-sys.path.append("e:\flask\.venv\.venv\Lib\site-packages")
+sys.path.append(r"e:\flask\.venv\.venv\Lib\site-packages")
 
 from flask import Flask
 from myapp import app
