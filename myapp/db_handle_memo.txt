@@ -1,0 +1,57 @@
+
+[mysqlの直接操作]
+[pythonを介したmysqlの操作]
+[]
+---------------------
+[mysqlの直接操作]
+1:: ログイン
+①ターミナルでmysql -u akira -pと打ち込みエンターキーを押す
+②パスワード　dounimonarannZ78　を入力
+➂　use r_materialism
+2::テーブルの中身や構造を表示させる
+中身=> SELECT * FROM option_info \G 
+ {\Gは必須ではないが、その場合は;を追加}
+構造=> DESCRIBE option_info;
+3::レコードの削除
+DELETE FROM テーブル名 WHERE 条件;　
+{where文を除くと全レコードが削除される}
+例/DELETE FROM option_info WHERE family_chord = 11 AND family_number = 11 ;
+[pythonプログラムを介してのDB操作]
+4::レコードの追加
+例/INSERT INTO users (name, email, age)
+VALUES ('Taro Yamada', 'taro@example.com', 30);
+5::カラムの型変更
+ALTER TABLE display_data 
+  MODIFY family_chord TEXT,
+  MODIFY family_number TEXT;
+カラム名を変更：
+ALTER TABLE option_info CHANGE destination explanation TEXT;
+=操作の履歴=
+1:トップページの表示データをテーブルに登録
+''''''''''''
+1:トップページの表示データをテーブルに登録
+〇family_chord 11
+11:titleの登録/
+INSERT INTO option_info (family_chord, family_number, 
+command_string,sentence,explanation)
+VALUES ('11', '11', 30);
+
+[pythonを介したmysqlの操作]
+1::データの存在確認
+
+2::データの取得
+sql = """ SELECT id, name, email
+                FROM users
+                WHERE id >= %s AND name LIKE %s
+                ORDER BY id ASC
+            """
+            params = (min_id, f"%{name_keyword}%")
+3::データの挿入
+sql = '''INSERT INTO option_info (family_chord, family_number,
+commmand_string,sentence,explanation)
+         VALUES (%s, %s, %s, %s ,%s)'''
+data = [
+    ('Shota', 'Sato', '2001-03-12', 'M'),
+    ('Hiroki', 'Takagi', '2000-04-05', 'M'),
+    ('Yuka', 'Kimura', '2001-03-27', 'F')
+]
